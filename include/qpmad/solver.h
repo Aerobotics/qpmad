@@ -168,7 +168,7 @@ namespace qpmad
                 const Vector<t_rows_Alb> &Alb,
                 const Vector<t_rows_Aub> &Aub)
         {
-            return (solve(primal, H, h, Eigen::VectorXd(), Eigen::VectorXd(), A, Alb, Aub, SolverParameters()));
+            return (solve(primal, H, h, Vector<-1>(), Vector<-1>(), A, Alb, Aub, SolverParameters()));
         }
 
 
@@ -206,7 +206,7 @@ namespace qpmad
                 const Vector<t_rows_ub> &ub,
                 const SolverParameters &param)
         {
-            return (solve(primal, H, h, lb, ub, Eigen::MatrixXd(), Eigen::VectorXd(), Eigen::VectorXd(), param));
+            return (solve(primal, H, h, lb, ub, Matrix<-1, -1>(), Vector<t_rows_h>(), Vector<t_rows_h>(), param));
         }
 
 
@@ -219,7 +219,7 @@ namespace qpmad
                 const Vector<t_rows_ub> &ub)
         {
             return (solve(
-                    primal, H, h, lb, ub, Eigen::MatrixXd(), Eigen::VectorXd(), Eigen::VectorXd(), SolverParameters()));
+                    primal, H, h, lb, ub, Matrix<-1, -1>(), Vector<-1>(), Vector<-1>(), SolverParameters()));
         }
 
 
@@ -275,7 +275,7 @@ namespace qpmad
             {
                 case SolverParameters::HESSIAN_LOWER_TRIANGULAR:
                 {
-                    const Eigen::LLT<Eigen::Ref<Eigen::MatrixXd>, Eigen::Lower> llt(H);
+                    const Eigen::LLT<Eigen::Ref<Matrix<t_rows_A, t_cols_A>>, Eigen::Lower> llt(H);
                     QPMAD_UTILS_PERSISTENT_ASSERT(
                             Eigen::Success == llt.info(), "Could not perform Cholesky decomposition of the Hessian.");
                 }
